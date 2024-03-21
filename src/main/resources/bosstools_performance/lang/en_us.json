@@ -1,0 +1,7 @@
+{
+  "tooltip.boss_tools.no_fuel": "%1$s %2$s (%3$s)",
+  "tooltip.boss_tools.no_fuel1": "NO FUEL!",
+  "tooltip.boss_tools.no_fuel2": "Fill the Rocket with %s.",
+  "tooltip.boss_tools.no_fuel3": "Sneak and Right Click",
+  "gui.boss_tools.planet_selection": "Planet Selection"
+}

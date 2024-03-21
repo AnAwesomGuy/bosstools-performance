@@ -1,0 +1,28 @@
+{
+  "required": true,
+  "package": "net.anawesomguy.bosstools_performance.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "EntityAccessor",
+    "EventsMixin",
+    "GravityMixin",
+    "ItemEntityMixin",
+    "Methodes$1Mixin",
+    "MethodesMixin",
+    "RocketLaunchPadMixin"
+  ],
+  "plugin": "net.anawesomguy.bosstools_performance.mixin.BossToolsPerformanceMixinPlugin",
+  "minVersion": "0.8",
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "client": [
+    "client.BipedArmorLayerMixin",
+    "client.ClientEventBusMarsOrbit$1Mixin",
+    "client.ClientEventBusMercury$1Mixin",
+    "client.ClientEventBusMercuryOrbit$1Mixin",
+    "client.ClientEventBusOverworldOrbit$1Mixin",
+    "client.ClientEventBusVenus$1Mixin",
+    "client.ClientEventBusVenusOrbit$1Mixin"
+  ]
+}
