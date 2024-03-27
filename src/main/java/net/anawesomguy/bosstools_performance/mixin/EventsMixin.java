@@ -1,22 +1,28 @@
 package net.anawesomguy.bosstools_performance.mixin;
 
+import com.llamalad7.mixinextras.sugar.Local;
 import net.anawesomguy.bosstools_performance.BossToolsPerformance;
 import net.anawesomguy.bosstools_performance.PerformanceMethodes;
 import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.mrscauthd.boss_tools.entity.LanderEntity;
 import net.mrscauthd.boss_tools.events.Events;
+import net.mrscauthd.boss_tools.events.Gravity;
 import net.mrscauthd.boss_tools.events.Methodes;
+import net.mrscauthd.boss_tools.events.OxygenSystem;
 import net.mrscauthd.boss_tools.events.forgeevents.RenderHandItemEvent;
 import net.mrscauthd.boss_tools.events.forgeevents.SetupLivingBipedAnimEvent;
-import org.embeddedt.modernfix.forge.shadow.mixinextras.sugar.Local;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Pseudo;
@@ -47,6 +53,34 @@ public abstract class EventsMixin {
                     world.setRainLevel(0F);
                 world.setThunderLevel(0F);
             }
+        }
+    }
+
+    /**
+     * @author AnAwesomGuy
+     * @reason performance over questionable Space-BossTools code.
+     */
+    @SubscribeEvent @Overwrite
+    public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.END) {
+            PlayerEntity player = event.player;
+            World world = player.level;
+            if (player.getY() < 1) {
+                Entity vehicle = player.getVehicle();
+                if (vehicle instanceof LanderEntity) {
+                    MinecraftServer server = world.getServer();
+                    ServerWorld level;
+                    if (server == null || (level = server.getLevel(ORBIT_WORLDS.get(world.dimension()))) == null)
+                        return;
+                    PerformanceMethodes.worldTeleport(player, level, 700)
+                                       .startRiding(PerformanceMethodes.worldTeleport(vehicle, level, 700));
+                } else
+                    PerformanceMethodes.worldTeleport(player, ORBIT_WORLDS.get(world.dimension()), 450);
+            }
+            Methodes.openPlanetGui(player);
+            OxygenSystem.OxygenSystem(player);
+            Gravity.Gravity(player, Gravity.GravityType.PLAYER, world);
+            Methodes.DropRocket(player);
         }
     }
 

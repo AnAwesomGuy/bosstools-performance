@@ -22,7 +22,7 @@ public abstract class GravityMixin {
             Gravity.gravityMath(type, entity, .02, -2.5F);
         else {
             double gravity = BossToolsPerformance.SPACE_WORLDS.getDouble(world.dimension());
-            if (gravity == gravity)
+            if (gravity == gravity) // check nan
                 Gravity.gravityMath(type, entity, gravity, gravity < .04 ? -2.5F : 2F);
         }
     }

@@ -6,13 +6,14 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.registries.IForgeRegistry;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 import net.mrscauthd.boss_tools.ModInnet;
 import net.mrscauthd.boss_tools.entity.LanderEntity;
 import net.mrscauthd.boss_tools.events.Config;
@@ -32,15 +33,18 @@ import static net.mrscauthd.boss_tools.ModInnet.*;
 @Pseudo
 @Mixin(value = Methodes.class, remap = false)
 public abstract class MethodesMixin {
-    @SuppressWarnings("unchecked")
-    @Redirect(method = "RocketSounds", at = @At(value = "INVOKE", target = "Lnet/minecraftforge/registries/IForgeRegistry;getValue(Lnet/minecraft/util/ResourceLocation;)Lnet/minecraftforge/registries/IForgeRegistryEntry;"))
-    private static <V extends IForgeRegistryEntry<V>> V bosstools_performance$rocketFlySound(IForgeRegistry<V> instance, ResourceLocation resourceLocation) {
-        return (V)ROCKET_SOUND.get();
-    }
-
     @Redirect(method = "createSpaceStation", at = @At(value = "NEW", target = "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;"))
     private static ResourceLocation bosstools_performance$spaceStation(String namespace, String path) {
         return SPACE_STATION;
+    }
+
+    /**
+     * @author AnAwesomGuy
+     * @reason performance over questionable Space-BossTools code.
+     */
+    @Overwrite
+    public static void RocketSounds(Entity entity, World world) {
+        world.playSound(null, entity, ROCKET_SOUND.get(), SoundCategory.NEUTRAL, 1.0F, 1.0F);
     }
 
     /**
@@ -73,11 +77,13 @@ public abstract class MethodesMixin {
     @Overwrite
     public static void landerTeleportOrbit(PlayerEntity player, World world) {
         Entity vehicle = player.getVehicle();
-        if (vehicle instanceof LanderEntity && player.getY() < 1D) {
-            RegistryKey<World> newWorld = ORBIT_WORLDS.get(world.dimension());
-            PerformanceMethodes.worldTeleport(player, newWorld, 700D);
-            PerformanceMethodes.worldTeleport(vehicle, newWorld, 700D);
-            player.startRiding(vehicle);
+        if (vehicle instanceof LanderEntity && player.getY() < 1) {
+            MinecraftServer server = world.getServer();
+            ServerWorld level;
+            if (server == null || (level = server.getLevel(ORBIT_WORLDS.get(world.dimension()))) == null)
+                return;
+            PerformanceMethodes.worldTeleport(player, level, 700D)
+                               .startRiding(PerformanceMethodes.worldTeleport(vehicle, level, 700D));
         }
     }
 
@@ -88,7 +94,7 @@ public abstract class MethodesMixin {
     @Overwrite
     public static void landerTeleport(PlayerEntity player, ResourceLocation newPlanet) {
         Entity vehicle = player.getVehicle();
-        if (vehicle instanceof LanderEntity && player.getY() < 1D) {
+        if (vehicle instanceof LanderEntity && player.getY() < 1) {
             RegistryKey<World> worldKey = RegistryKey.create(Registry.DIMENSION_REGISTRY, newPlanet);
             PerformanceMethodes.worldTeleport(player, worldKey, 700D);
             PerformanceMethodes.worldTeleport(vehicle, worldKey, 700D);

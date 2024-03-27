@@ -2,6 +2,7 @@ package net.anawesomguy.bosstools_performance.mixin;
 
 import com.bawnorton.mixinsquared.MixinSquaredBootstrap;
 import com.bawnorton.mixinsquared.canceller.MixinCancellerRegistrar;
+import com.llamalad7.mixinextras.MixinExtrasBootstrap;
 import org.objectweb.asm.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;
 import org.spongepowered.asm.mixin.extensibility.IMixinInfo;
@@ -15,6 +16,7 @@ public class BossToolsPerformanceMixinPlugin implements IMixinConfigPlugin {
     @Override
     public void onLoad(String mixinPackage) {
         MixinSquaredBootstrap.init();
+        MixinExtrasBootstrap.init();
         MixinCancellerRegistrar.register((targets, name) -> "net.mrscauthd.boss_tools.mixin.MixinItemGravity".equals(name) || "net.mrscauthd.boss_tools.mixin.ArmorTranslucent".equals(name));
     }
 

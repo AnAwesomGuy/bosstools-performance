@@ -1,5 +1,7 @@
 package net.anawesomguy.bosstools_performance.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.anawesomguy.bosstools_performance.BossToolsPerformance;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -9,8 +11,6 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.mrscauthd.boss_tools.events.forgeevents.ItemGravityEvent;
-import org.embeddedt.modernfix.forge.shadow.mixinextras.injector.wrapoperation.Operation;
-import org.embeddedt.modernfix.forge.shadow.mixinextras.injector.wrapoperation.WrapOperation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -28,7 +28,7 @@ public abstract class ItemEntityMixin extends Entity {
                     return new Vector3d(instance.x + x, (instance.y / .98 + .08 - gravity) + y, instance.z + z);
             }
         }
-        return original.call(x, y, z);
+        return original.call(instance, x, y, z);
     }
 
     private ItemEntityMixin(EntityType<?> entityTypeIn, World worldIn) {
