@@ -1,4 +1,4 @@
-### Depends on Space-BossTools! (this should be obvious)
+## **DEPENDS ON MODERNFIX!** (and Space-BossTools)
 
 A performance mod for Space-BossTools, and "optimizes" a lot of its absolutely _terrible_ code.
 

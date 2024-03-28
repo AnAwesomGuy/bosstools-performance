@@ -4,7 +4,7 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
     id 'me.modmuss50.mod-publish-plugin' version '0.5.1'
-    id 'com.github.johnrengelman.shadow' version '8.1.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
 version = mod_version
@@ -25,7 +25,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            args '-mixin.config=bosstools_performance.mixins.json'
+            args '-mixin.config=bosstools-performance.mixins.json'
             mods {
                 "${mod_id}" {
                     source sourceSets.main
@@ -33,9 +33,7 @@ minecraft {
             }
         }
 
-        client {
-        }
-
+        client
         clientMixinDebug {
             parent runs.client
             property 'mixin.debug.export', 'true'
@@ -83,7 +81,7 @@ dependencies {
     minecraft "net.minecraftforge:forge:$minecraft_version-36.2.42"
     implementation fg.deobf('curse.maven:beyond-earth-377448:3581611')
     shadow annotationProcessor('com.github.bawnorton.mixinsquared:mixinsquared-common:0.1.2-beta.3')
-    shadow annotationProcessor('io.github.llamalad7:mixinextras-common:0.3.2')
+    implementation(annotationProcessor 'io.github.llamalad7:mixinextras-common:0.3.2')
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 
     // these are for testing purposes
@@ -93,13 +91,6 @@ dependencies {
     runtimeOnly fg.deobf("curse.maven:ferritecore-429235:4074330")
     runtimeOnly fg.deobf('curse.maven:shutup-experimental-settings-407174:3188120')
     runtimeOnly fg.deobf("org.embeddedt:embeddium-$minecraft_version:0.3.7-git.114f034+mc$minecraft_version")
-}
-
-shadowJar {
-    configurations = [project.configurations.shadow]
-    relocate('com.llamalad7.mixinextras', 'net.anawesomguy.bosstools_performance.mixinextras')
-    relocate('com.github.mixinsquared', 'net.anawesomguy.bosstools_performance.mixinsquared')
-    mergeServiceFiles()
 }
 
 import groovy.json.JsonSlurper
@@ -130,21 +121,40 @@ processResources {
 }
 
 jar {
+    archiveClassifier.set 'slim'
+
     manifest {
         attributes([
-                'Specification-Title'     : mod_id,
-                'Specification-Vendor'    : mod_authors,
-                'Specification-Version'   : 1,
-                'Implementation-Title'    : project.name,
-                'Implementation-Version'  : project.jar.archiveVersion,
-                'Implementation-Vendor'   : mod_authors,
-                'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                'Mixin-Configs'           : 'bosstools-performace.mixins.json'
+            'Specification-Title'     : mod_id,
+            'Specification-Vendor'    : mod_authors,
+            'Specification-Version'   : 1,
+            'Implementation-Title'    : project.name,
+            'Implementation-Version'  : project.jar.archiveVersion,
+            'Implementation-Vendor'   : mod_authors,
+            'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            'Mixin-Configs'           : 'bosstools-performace.mixins.json'
         ])
     }
 
-    from('LICENSE')
-    finalizedBy 'reobfJar'
+    from('LICENSE') {
+        rename { "${it}-${mod_id}" }
+    }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadow]
+    relocate('com.llamalad7.mixinextras', 'org.embeddedt.modernfix.forge.shadow.mixinextras')
+    relocate('com.bawnorton.mixinsquared', 'net.anawesomguy.bosstools_performance.mixinsquared')
+    archiveClassifier.set ''
+    mergeServiceFiles()
+
+    finalizedBy 'reobfShadowJar'
+}
+
+assemble.dependsOn shadowJar
+
+reobf {
+    shadowJar {}
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -152,7 +162,8 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 publishMods {
-    file = jar.archiveFile
+    file = shadowJar.archiveFile
+    additionalFiles.from jar.archiveFile
     modLoaders.add('forge')
     displayName = "BossTools Performance $mod_version"
     changelog = file('changelog.md').text
