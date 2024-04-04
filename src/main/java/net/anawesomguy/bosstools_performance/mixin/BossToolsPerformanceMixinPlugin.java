@@ -31,6 +31,8 @@ public class BossToolsPerformanceMixinPlugin implements IMixinConfigPlugin {
                (MERCURY_ORBIT_STAR_COUNT.get() != -1 || !"net.anawesomguy.bosstools_performance.mixin.client.stars.ClientEventBusMercuryOrbit$1Mixin".equals(name)) &&
                (VENUS_ORBIT_STAR_COUNT.get() != -1 || !"net.anawesomguy.bosstools_performance.mixin.client.stars.ClientEventBusVenusOrbit$1Mixin".equals(name)) &&
                (OVERWORLD_ORBIT_STAR_COUNT.get() != -1 || !"net.anawesomguy.bosstools_performance.mixin.client.stars.ClientEventBusOverworldOrbit$1Mixin".equals(name)) &&
+               (MOON_STAR_COUNT.get() != -1 || !"net.anawesomguy.bosstools_performance.mixin.client.stars.ClientEventBusMoon$1Mixin".equals(name)) &&
+               (MOON_ORBIT_STAR_COUNT.get() != -1 || !"net.anawesomguy.bosstools_performance.mixin.client.stars.ClientEventBusMoonOrbit$1Mixin".equals(name)) &&
                (MARS_ORBIT_STAR_COUNT.get() != -1 || !"net.anawesomguy.bosstools_performance.mixin.client.stars.ClientEventBusMarsOrbit$1Mixin".equals(name));
     }
 

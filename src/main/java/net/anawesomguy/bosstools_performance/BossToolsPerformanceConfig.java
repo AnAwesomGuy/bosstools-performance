@@ -23,7 +23,7 @@ public final class BossToolsPerformanceConfig {
         RENDER_VENUS_RAIN = builder.comment(" Set to true to render the rain effect on Venus.")
                                    .define("renderVenusRain", false);
         RENDER_VENUS_PARTICLES = builder.comment(" Set to true to render the rain particles on Venus.")
-                                        .define("renderVenusParticles", false);
+                                        .define("renderVenusParticles", true);
         CONFIG_SPEC = builder.build();
     }
 

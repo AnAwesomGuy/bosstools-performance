@@ -25,7 +25,7 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
-            args '-mixin.config=bosstools-performance.mixins.json'
+            args "-mixin.config=${mod_id}.mixins.json"
             mods {
                 "${mod_id}" {
                     source sourceSets.main
@@ -78,19 +78,19 @@ configurations {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:$minecraft_version-36.2.42"
+    minecraft "net.minecraftforge:forge:$minecraft_version-36.2.39"
     implementation fg.deobf('curse.maven:beyond-earth-377448:3581611')
     shadow annotationProcessor('com.github.bawnorton.mixinsquared:mixinsquared-common:0.1.2-beta.3')
-    implementation(annotationProcessor 'io.github.llamalad7:mixinextras-common:0.3.2')
+    implementation annotationProcessor('io.github.llamalad7:mixinextras-common:0.3.2')
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 
     // these are for testing purposes
     runtimeOnly fg.deobf('curse.maven:spark-361579:3767277')
-    runtimeOnly fg.deobf('curse.maven:modernfix-790626:5157663')
-    runtimeOnly fg.deobf("curse.maven:lazy-dfu-forge-460819:3249059")
-    runtimeOnly fg.deobf("curse.maven:ferritecore-429235:4074330")
+    runtimeOnly fg.deobf('curse.maven:modernfix-790626:5203334')
+    runtimeOnly fg.deobf('curse.maven:lazy-dfu-forge-460819:3249059')
+    runtimeOnly fg.deobf('curse.maven:ferritecore-429235:4074330')
     runtimeOnly fg.deobf('curse.maven:shutup-experimental-settings-407174:3188120')
-    runtimeOnly fg.deobf("org.embeddedt:embeddium-$minecraft_version:0.3.7-git.114f034+mc$minecraft_version")
+    runtimeOnly fg.deobf("org.embeddedt:embeddium-$minecraft_version:0.3.9-git.eafb367+mc$minecraft_version")
 }
 
 import groovy.json.JsonSlurper
@@ -120,6 +120,10 @@ processResources {
     }
 }
 
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+}
+
 jar {
     archiveClassifier.set 'slim'
 
@@ -132,7 +136,7 @@ jar {
             'Implementation-Version'  : project.jar.archiveVersion,
             'Implementation-Vendor'   : mod_authors,
             'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-            'Mixin-Configs'           : 'bosstools-performace.mixins.json'
+            'MixinConfigs'            : "${mod_id}.mixins.json"
         ])
     }
 

@@ -1,12 +1,10 @@
 package net.anawesomguy.bosstools_performance.mixin;
 
-import com.llamalad7.mixinextras.sugar.Local;
 import net.anawesomguy.bosstools_performance.BossToolsPerformance;
 import net.anawesomguy.bosstools_performance.PerformanceMethodes;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.ResourceLocation;
@@ -21,11 +19,9 @@ import net.mrscauthd.boss_tools.events.Events;
 import net.mrscauthd.boss_tools.events.Gravity;
 import net.mrscauthd.boss_tools.events.Methodes;
 import net.mrscauthd.boss_tools.events.OxygenSystem;
-import net.mrscauthd.boss_tools.events.forgeevents.RenderHandItemEvent;
 import net.mrscauthd.boss_tools.events.forgeevents.SetupLivingBipedAnimEvent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
-import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -36,7 +32,6 @@ import static net.anawesomguy.bosstools_performance.BossToolsPerformance.ORBIT_W
 import static net.anawesomguy.bosstools_performance.BossToolsPerformance.SPACE_WORLDS;
 import static net.anawesomguy.bosstools_performance.BossToolsPerformance.VENUS_KEY;
 
-@Pseudo
 @Mixin(value = Events.class, remap = false)
 public abstract class EventsMixin {
     /**
@@ -100,7 +95,7 @@ public abstract class EventsMixin {
                 model.rightLeg.yRot = .05235988F; // Math.toRadians(3F)
                 model.leftArm.xRot = -.07F;
                 model.rightArm.xRot = -.07F;
-            } else if (PerformanceMethodes.areBothRocketsOrRovers(player.getMainHandItem().getItem(), player.getOffhandItem().getItem())) {
+            } else if (PerformanceMethodes.isEitherRocketOrRover(player.getMainHandItem().getItem(), player.getOffhandItem().getItem())) {
                 model.rightArm.xRot = 10F;
                 model.leftArm.xRot = 10F;
                 model.leftArm.zRot = 0F;
@@ -111,17 +106,12 @@ public abstract class EventsMixin {
         }
     }
 
-    @Inject(method = "ItemRender", at = @At(value = "INVOKE_ASSIGN", target = "Lnet/minecraft/item/ItemStack;getItem()Lnet/minecraft/item/Item;", ordinal = 0), slice = @Slice(from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getOffhandItem()Lnet/minecraft/item/ItemStack;")), cancellable = true)
-    private static void bosstools_performance$renderEventPerformance(RenderHandItemEvent.Pre event, CallbackInfo ci, @Local(ordinal = 0) Item mainHand, @Local(ordinal = 1) Item offHand) {
-        for (Item item : PerformanceMethodes.ROCKETS_AND_ROVER)
-            if (item == mainHand || item == offHand) {
-                event.setCanceled(true);
-                break;
-            }
+    @Inject(method = "ItemRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getMainHandItem()Lnet/minecraft/item/ItemStack;"), cancellable = true, remap = true)
+    private static void bosstools_performance$renderEventPerformance(CallbackInfo ci) {
         ci.cancel();
     }
 
-    @Redirect(method = "onLivingEntityTick", at = @At(value = "NEW", target = "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;"), slice = @Slice(to = @At(value = "NEW", target = "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;", ordinal = 2)))
+    @Redirect(method = "onLivingEntityTick", at = @At(value = "NEW", target = "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;"), slice = @Slice(to = @At(value = "NEW", target = "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;", ordinal = 2)), require = 2)
     private static ResourceLocation bosstools_performance$storeVenusRl(String namespace, String path) {
         return BossToolsPerformance.VENUS;
     }

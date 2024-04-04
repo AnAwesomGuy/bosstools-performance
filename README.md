@@ -2,7 +2,7 @@
 
 A performance mod for Space-BossTools, and "optimizes" a lot of its absolutely _terrible_ code.
 
-On its own with Space-BossTools, ModernFix, and Embeddium, this mod can save around 25% on _both_ the server and client, especially when you're actively on a planet/in orbit.<br>
+On its own with Space-BossTools, ModernFix, and Embeddium, this mod can save around 20% on _both_ the server and client, especially when you're actively on a planet/in orbit.<br>
 However, when put into a larger modpack (for example, FTB Integration by Parts DX), it can still save up to 9% (even more, depending on how many entities are loaded), still on both sides.
 
 The aims of this mod are to improve performance while using Space-BossTools, while still keeping the same features and being easily configurable.

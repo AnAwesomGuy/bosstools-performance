@@ -35,6 +35,6 @@ side="BOTH"
 [[dependencies.${mod_id}]]
 modId="modernfix"
 mandatory=true
-versionRange="[5.15,)"
+versionRange="[5.7,)"
 ordering="BEFORE"
 side="BOTH"

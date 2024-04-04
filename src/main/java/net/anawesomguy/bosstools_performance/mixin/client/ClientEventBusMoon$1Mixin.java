@@ -12,8 +12,8 @@ import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Pseudo
-@Mixin(targets = "net.mrscauthd.boss_tools.skyrenderer.ClientEventBusMercuryOrbit$1")
-public abstract class ClientEventBusMercuryOrbit$1Mixin extends DimensionRenderInfo {
+@Mixin(targets = "net.mrscauthd.boss_tools.skyrenderer.ClientEventBusMoon$1")
+public abstract class ClientEventBusMoon$1Mixin extends DimensionRenderInfo {
     @Redirect(method = "renderStars", at = @At(value = "FIELD", target = "Lnet/minecraft/client/GameSettings;graphicsMode:Lnet/minecraft/client/settings/GraphicsFanciness;", ordinal = 0))
     private GraphicsFanciness bosstools_performance$redirectStarCountCheck(GameSettings instance) {
         return GraphicsFanciness.FANCY;
@@ -21,10 +21,10 @@ public abstract class ClientEventBusMercuryOrbit$1Mixin extends DimensionRenderI
 
     @ModifyConstant(method = "renderStars", constant = @Constant(intValue = 13000), remap = false)
     private int bosstools_performance$redirectStarCount(int constant) {
-        return BossToolsPerformanceConfig.MERCURY_ORBIT_STAR_COUNT.get();
+        return BossToolsPerformanceConfig.MARS_ORBIT_STAR_COUNT.get();
     }
 
-    private ClientEventBusMercuryOrbit$1Mixin() {
+    private ClientEventBusMoon$1Mixin() {
         //noinspection DataFlowIssue
         super(0F, false, null, false, false);
     }

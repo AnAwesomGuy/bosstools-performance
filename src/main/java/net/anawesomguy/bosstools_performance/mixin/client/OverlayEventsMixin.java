@@ -4,13 +4,11 @@ import net.anawesomguy.bosstools_performance.BossToolsPerformance;
 import net.minecraft.util.ResourceLocation;
 import net.mrscauthd.boss_tools.events.OverlayEvents;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Pseudo;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 // don't really know how to optimize this further, this stuff doesn't really make too much sense to me
-@Pseudo
 @Mixin(value = OverlayEvents.class, remap = false)
 public abstract class OverlayEventsMixin {
     @Unique

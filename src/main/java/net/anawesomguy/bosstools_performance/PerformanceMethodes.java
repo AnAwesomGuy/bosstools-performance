@@ -89,23 +89,30 @@ public final class PerformanceMethodes {
         return entity;
     }
 
-    public static boolean areBothRocketsOrRovers(Item item1, Item item2) {
+    public static boolean isBothRocketOrRover(Item item1, Item item2) {
         if (item1 == null || item2 == null)
             return false;
         Item found = null;
-        for (Item item : ROCKETS_AND_ROVER) {
+        for (Item item : ROCKETS_AND_ROVER)
             if (item == item1) {
                 if (found == null) {
                     if (item1 == item2)
                         return true;
                     found = item1;
                 } else return true;
-            } else if (item == item2) {
+            } else if (item == item2)
                 if (found == null)
                     found = item2;
                 else return true;
-            }
-        }
+        return false;
+    }
+
+    public static boolean isEitherRocketOrRover(Item item1, Item item2) {
+        if (item1 == null || item2 == null)
+            return false;
+        for (Item item : ROCKETS_AND_ROVER)
+            if (item == item1 || item == item2)
+                return true;
         return false;
     }
 

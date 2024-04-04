@@ -22,6 +22,8 @@
     "client.ClientEventBusMarsOrbit$1Mixin",
     "client.ClientEventBusMercury$1Mixin",
     "client.ClientEventBusMercuryOrbit$1Mixin",
+    "client.ClientEventBusMoon$1Mixin",
+    "client.ClientEventBusMoonOrbit$1Mixin",
     "client.ClientEventBusOverworldOrbit$1Mixin",
     "client.ClientEventBusVenus$1Mixin",
     "client.ClientEventBusVenusOrbit$1Mixin",
