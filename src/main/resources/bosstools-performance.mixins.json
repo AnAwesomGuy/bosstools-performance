@@ -1,17 +1,18 @@
 {
   "required": true,
-  "package": "net.anawesomguy.bosstools_performance.mixin",
+  "package": "net.anawesomguy.bosstools_perf.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
     "EntityAccessor",
     "EventsMixin",
     "GravityMixin",
     "ItemEntityMixin",
+    "ItemPhysicServerMixin",
     "Methodes$1Mixin",
     "MethodesMixin",
     "RocketLaunchPadMixin"
   ],
-  "plugin": "net.anawesomguy.bosstools_performance.mixin.BossToolsPerformanceMixinPlugin",
+  "plugin": "net.anawesomguy.bosstools_perf.BossToolsPerformanceMixinPlugin",
   "refmap": "bosstools-performance.refmap.json",
   "minVersion": "0.8",
   "injectors": {

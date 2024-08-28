@@ -1,7 +1,7 @@
-package net.anawesomguy.bosstools_performance.mixin;
+package net.anawesomguy.bosstools_perf.mixin;
 
-import net.anawesomguy.bosstools_performance.BossToolsPerformance;
-import net.anawesomguy.bosstools_performance.PerformanceMethodes;
+import net.anawesomguy.bosstools_perf.BossToolsPerformance;
+import net.anawesomguy.bosstools_perf.PerformanceMethodes;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,9 +28,9 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static net.anawesomguy.bosstools_performance.BossToolsPerformance.ORBIT_WORLDS;
-import static net.anawesomguy.bosstools_performance.BossToolsPerformance.SPACE_WORLDS;
-import static net.anawesomguy.bosstools_performance.BossToolsPerformance.VENUS_KEY;
+import static net.anawesomguy.bosstools_perf.BossToolsPerformance.ORBIT_WORLDS;
+import static net.anawesomguy.bosstools_perf.BossToolsPerformance.SPACE_WORLDS;
+import static net.anawesomguy.bosstools_perf.BossToolsPerformance.VENUS_KEY;
 
 @Mixin(value = Events.class, remap = false)
 public abstract class EventsMixin {
@@ -107,17 +107,17 @@ public abstract class EventsMixin {
     }
 
     @Inject(method = "ItemRender", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;getMainHandItem()Lnet/minecraft/item/ItemStack;"), cancellable = true, remap = true)
-    private static void bosstools_performance$renderEventPerformance(CallbackInfo ci) {
+    private static void bosstools_perf$renderEventPerformance(CallbackInfo ci) {
         ci.cancel();
     }
 
     @Redirect(method = "onLivingEntityTick", at = @At(value = "NEW", target = "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;"), slice = @Slice(to = @At(value = "NEW", target = "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;", ordinal = 2)), require = 2)
-    private static ResourceLocation bosstools_performance$storeVenusRl(String namespace, String path) {
+    private static ResourceLocation bosstools_perf$storeVenusRl(String namespace, String path) {
         return BossToolsPerformance.VENUS;
     }
 
     @Redirect(method = "onLivingEntityTick", at = @At(value = "NEW", target = "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;", ordinal = 2))
-    private static ResourceLocation bosstools_performance$storeMercuryRl(String namespace, String path) {
+    private static ResourceLocation bosstools_perf$storeMercuryRl(String namespace, String path) {
         return BossToolsPerformance.MERCURY;
     }
 }

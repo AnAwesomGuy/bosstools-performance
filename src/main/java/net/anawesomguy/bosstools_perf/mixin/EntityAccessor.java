@@ -1,4 +1,4 @@
-package net.anawesomguy.bosstools_performance.mixin;
+package net.anawesomguy.bosstools_perf.mixin;
 
 import net.minecraft.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;

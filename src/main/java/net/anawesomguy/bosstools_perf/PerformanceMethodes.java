@@ -1,4 +1,4 @@
-package net.anawesomguy.bosstools_performance;
+package net.anawesomguy.bosstools_perf;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;

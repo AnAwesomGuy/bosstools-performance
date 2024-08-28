@@ -74,12 +74,12 @@ into just this:
 ```java
 @SubscribeEvent
 public static void onLivingEntityTick(LivingUpdateEvent event) {
-  LivingEntity entity = event.getEntityLiving();
-  World world = entity.level;
-  Methodes.EntityOxygen(entity, world);
-  Gravity.Gravity(entity, Gravity.GravityType.LIVING, world);
-  Methodes.VenusRain(entity, VENUS);
-  Methodes.VenusFire(entity, VENUS, MERCURY);
+    LivingEntity entity = event.getEntityLiving();
+    World world = entity.level;
+    Methodes.EntityOxygen(entity, world);
+    Gravity.Gravity(entity, Gravity.GravityType.LIVING, world);
+    Methodes.VenusRain(entity, VENUS);
+    Methodes.VenusFire(entity, VENUS, MERCURY);
 }
 
 // Gravity.class

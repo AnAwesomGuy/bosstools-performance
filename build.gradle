@@ -1,9 +1,9 @@
 plugins {
     id 'idea'
-    id 'net.minecraftforge.gradle' version '6.0.20'
+    id 'net.minecraftforge.gradle' version '6.0.+'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
-    id 'me.modmuss50.mod-publish-plugin' version '0.5.1'
+    id 'me.modmuss50.mod-publish-plugin' version '0.6.3'
     id 'com.github.johnrengelman.shadow' version '8.1.1'
 }
 
@@ -148,7 +148,7 @@ jar {
 shadowJar {
     configurations = [project.configurations.shadow]
     relocate('com.llamalad7.mixinextras', 'org.embeddedt.modernfix.forge.shadow.mixinextras')
-    relocate('com.bawnorton.mixinsquared', 'net.anawesomguy.bosstools_performance.mixinsquared')
+    relocate('com.bawnorton.mixinsquared', 'net.anawesomguy.bosstools_perf.mixinsquared')
     archiveClassifier.set ''
     mergeServiceFiles()
 

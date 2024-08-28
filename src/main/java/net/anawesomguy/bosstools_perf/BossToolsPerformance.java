@@ -1,4 +1,4 @@
-package net.anawesomguy.bosstools_performance;
+package net.anawesomguy.bosstools_perf;
 
 import it.unimi.dsi.fastutil.objects.Object2DoubleMap;
 import it.unimi.dsi.fastutil.objects.Object2DoubleMaps;

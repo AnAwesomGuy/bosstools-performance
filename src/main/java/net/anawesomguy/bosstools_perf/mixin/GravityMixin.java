@@ -1,6 +1,6 @@
-package net.anawesomguy.bosstools_performance.mixin;
+package net.anawesomguy.bosstools_perf.mixin;
 
-import net.anawesomguy.bosstools_performance.BossToolsPerformance;
+import net.anawesomguy.bosstools_perf.BossToolsPerformance;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.world.World;
 import net.mrscauthd.boss_tools.events.Gravity;

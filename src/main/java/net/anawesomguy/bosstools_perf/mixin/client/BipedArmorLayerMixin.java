@@ -1,4 +1,4 @@
-package net.anawesomguy.bosstools_performance.mixin.client;
+package net.anawesomguy.bosstools_perf.mixin.client;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -19,7 +19,7 @@ public abstract class BipedArmorLayerMixin<T extends LivingEntity, A extends Bip
     private static final ResourceLocation NETHERITE_SPACE_SUIT = new ResourceLocation("boss_tools", "textures/models/armor/netherite_space_suit_head.png");
 
     @WrapOperation(method = "renderModel(Lcom/mojang/blaze3d/matrix/MatrixStack;Lnet/minecraft/client/renderer/IRenderTypeBuffer;IZLnet/minecraft/client/renderer/entity/model/BipedModel;FFFLnet/minecraft/util/ResourceLocation;)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/RenderType;armorCutoutNoCull(Lnet/minecraft/util/ResourceLocation;)Lnet/minecraft/client/renderer/RenderType;"))
-    private RenderType bosstools_performance$armorTranslucent(ResourceLocation armorResource, Operation<RenderType> original) {
+    private RenderType bosstools_perf$armorTranslucent(ResourceLocation armorResource, Operation<RenderType> original) {
         return armorResource.equals(SPACE_SUIT) || armorResource.equals(NETHERITE_SPACE_SUIT) ? RenderType.entityTranslucent(armorResource) : original.call(armorResource);
     }
 }

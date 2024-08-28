@@ -1,6 +1,6 @@
-package net.anawesomguy.bosstools_performance.mixin.client;
+package net.anawesomguy.bosstools_perf.mixin.client;
 
-import net.anawesomguy.bosstools_performance.BossToolsPerformanceConfig;
+import net.anawesomguy.bosstools_perf.BossToolsPerformanceConfig;
 import net.minecraft.client.world.DimensionRenderInfo;
 import net.minecraftforge.client.IWeatherParticleRenderHandler;
 import net.minecraftforge.client.IWeatherRenderHandler;

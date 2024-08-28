@@ -1,6 +1,6 @@
-package net.anawesomguy.bosstools_performance.mixin;
+package net.anawesomguy.bosstools_perf.mixin;
 
-import net.anawesomguy.bosstools_performance.PerformanceMethodes;
+import net.anawesomguy.bosstools_perf.PerformanceMethodes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -25,14 +25,14 @@ import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-import static net.anawesomguy.bosstools_performance.BossToolsPerformance.*;
+import static net.anawesomguy.bosstools_perf.BossToolsPerformance.*;
 import static net.minecraft.inventory.EquipmentSlotType.*;
 import static net.mrscauthd.boss_tools.ModInnet.*;
 
 @Mixin(value = Methodes.class, remap = false)
 public abstract class MethodesMixin {
     @Redirect(method = "createSpaceStation", at = @At(value = "NEW", target = "(Ljava/lang/String;Ljava/lang/String;)Lnet/minecraft/util/ResourceLocation;"))
-    private static ResourceLocation bosstools_performance$spaceStation(String namespace, String path) {
+    private static ResourceLocation bosstools_perf$spaceStation(String namespace, String path) {
         return SPACE_STATION;
     }
 

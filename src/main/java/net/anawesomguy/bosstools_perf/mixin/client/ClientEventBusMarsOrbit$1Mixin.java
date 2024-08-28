@@ -1,6 +1,6 @@
-package net.anawesomguy.bosstools_performance.mixin.client;
+package net.anawesomguy.bosstools_perf.mixin.client;
 
-import net.anawesomguy.bosstools_performance.BossToolsPerformanceConfig;
+import net.anawesomguy.bosstools_perf.BossToolsPerformanceConfig;
 import net.minecraft.client.GameSettings;
 import net.minecraft.client.settings.GraphicsFanciness;
 import net.minecraft.client.world.DimensionRenderInfo;
@@ -15,12 +15,12 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(targets = "net.mrscauthd.boss_tools.skyrenderer.ClientEventBusMarsOrbit$1")
 public abstract class ClientEventBusMarsOrbit$1Mixin extends DimensionRenderInfo {
     @Redirect(method = "renderStars", at = @At(value = "FIELD", target = "Lnet/minecraft/client/GameSettings;graphicsMode:Lnet/minecraft/client/settings/GraphicsFanciness;", ordinal = 0))
-    private GraphicsFanciness bosstools_performance$redirectStarCountCheck(GameSettings instance) {
+    private GraphicsFanciness bosstools_perf$redirectStarCountCheck(GameSettings instance) {
         return GraphicsFanciness.FANCY;
     }
 
     @ModifyConstant(method = "renderStars", constant = @Constant(intValue = 13000), remap = false)
-    private int bosstools_performance$redirectStarCount(int constant) {
+    private int bosstools_perf$redirectStarCount(int constant) {
         return BossToolsPerformanceConfig.MARS_ORBIT_STAR_COUNT.get();
     }
 

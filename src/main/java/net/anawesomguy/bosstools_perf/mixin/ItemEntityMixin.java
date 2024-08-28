@@ -1,8 +1,8 @@
-package net.anawesomguy.bosstools_performance.mixin;
+package net.anawesomguy.bosstools_perf.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.anawesomguy.bosstools_performance.BossToolsPerformance;
+import net.anawesomguy.bosstools_perf.BossToolsPerformance;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.item.ItemEntity;
@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.At;
 @Mixin(ItemEntity.class)
 public abstract class ItemEntityMixin extends Entity {
     @WrapOperation(at = @At(value = "INVOKE", target = "Lnet/minecraft/util/math/vector/Vector3d;add(DDD)Lnet/minecraft/util/math/vector/Vector3d;"), method = "tick")
-    private Vector3d bosstools_performance$gravityPerformance(Vector3d instance, double x, double y, double z, Operation<Vector3d> original) {
+    private Vector3d bosstools_perf$gravityPerformance(Vector3d instance, double x, double y, double z, Operation<Vector3d> original) {
         if (!MinecraftForge.EVENT_BUS.post(new ItemGravityEvent((ItemEntity)(Object)this))) {
             RegistryKey<World> worldKey = level.dimension();
             if (BossToolsPerformance.ORBIT_WORLDS.containsKey(worldKey))

@@ -1,6 +1,6 @@
-package net.anawesomguy.bosstools_performance.mixin;
+package net.anawesomguy.bosstools_perf.mixin;
 
-import net.anawesomguy.bosstools_performance.PerformanceMethodes;
+import net.anawesomguy.bosstools_perf.PerformanceMethodes;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.util.text.ITextComponent;
 import org.spongepowered.asm.mixin.Mixin;
