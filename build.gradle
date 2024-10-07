@@ -3,8 +3,8 @@ plugins {
     id 'net.minecraftforge.gradle' version '6.0.+'
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
     id 'org.spongepowered.mixin' version '0.7-SNAPSHOT'
-    id 'me.modmuss50.mod-publish-plugin' version '0.6.3'
-    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'me.modmuss50.mod-publish-plugin' version '0.7.+'
+    id 'com.github.johnrengelman.shadow' version '8.1.+'
 }
 
 version = mod_version
@@ -16,6 +16,10 @@ base {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+}
+
 minecraft {
     mappings channel: 'parchment', version: "2022.03.06-$minecraft_version"
     copyIdeResources = true
@@ -25,6 +29,8 @@ minecraft {
             workingDirectory project.file('run')
             property 'forge.logging.markers', 'REGISTRIES'
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.env.remapRefMap', 'true'
+            property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
             args "-mixin.config=${mod_id}.mixins.json"
             mods {
                 "${mod_id}" {
@@ -36,7 +42,7 @@ minecraft {
         client
         clientMixinDebug {
             parent runs.client
-            property 'mixin.debug.export', 'true'
+            property 'mixin.debug', 'true'
         }
 
         server {
@@ -45,7 +51,7 @@ minecraft {
 
         serverMixinDebug {
             parent runs.server
-            property 'mixin.debug.export', 'true'
+            property 'mixin.debug', 'true'
         }
     }
 }
@@ -58,10 +64,11 @@ repositories {
         }
     }
 
+
     maven {
-        url 'https://maven.blamejared.com'
+        url 'https://api.modrinth.com/maven'
         content {
-            includeGroup 'org.embeddedt'
+            includeGroup 'maven.modrinth'
         }
     }
 
@@ -78,19 +85,19 @@ configurations {
 }
 
 dependencies {
-    minecraft "net.minecraftforge:forge:$minecraft_version-36.2.39"
+    minecraft "net.minecraftforge:forge:$minecraft_version-36.2.42"
     implementation fg.deobf('curse.maven:beyond-earth-377448:3581611')
     shadow annotationProcessor('com.github.bawnorton.mixinsquared:mixinsquared-common:0.1.2-beta.3')
     implementation annotationProcessor('io.github.llamalad7:mixinextras-common:0.3.2')
     annotationProcessor 'org.spongepowered:mixin:0.8.4:processor'
 
     // these are for testing purposes
-    runtimeOnly fg.deobf('curse.maven:spark-361579:3767277')
-    runtimeOnly fg.deobf('curse.maven:modernfix-790626:5203334')
+    runtimeOnly fg.deobf('maven.modrinth:spark:1.9.1-forge1165')
+    runtimeOnly fg.deobf('maven.modrinth:modernfix:Cc0b1kXl')
     runtimeOnly fg.deobf('curse.maven:lazy-dfu-forge-460819:3249059')
-    runtimeOnly fg.deobf('curse.maven:ferritecore-429235:4074330')
+    runtimeOnly fg.deobf('maven.modrinth:ferrite-core:2.1.1-forge')
     runtimeOnly fg.deobf('curse.maven:shutup-experimental-settings-407174:3188120')
-    runtimeOnly fg.deobf("org.embeddedt:embeddium-$minecraft_version:0.3.9-git.eafb367+mc$minecraft_version")
+    runtimeOnly fg.deobf('maven.modrinth:embeddium:0.3.18+mc1.16.5')
 }
 
 import groovy.json.JsonSlurper
@@ -118,10 +125,6 @@ processResources {
             it.text = JsonOutput.toJson(new JsonSlurper().parse(it))
         }
     }
-}
-
-mixin {
-    add sourceSets.main, "${mod_id}.refmap.json"
 }
 
 jar {
@@ -168,20 +171,20 @@ tasks.withType(JavaCompile).configureEach {
 publishMods {
     file = shadowJar.archiveFile
     additionalFiles.from jar.archiveFile
-    modLoaders.add('forge')
+    modLoaders.add 'forge'
     displayName = "BossTools Performance $mod_version"
     changelog = file('changelog.md').text
     type = STABLE
 
     curseforge {
         projectId = '997755'
-        accessToken = providers.environmentVariable '$CURSEFORGE_TOKEN'
+        accessToken = providers.environmentVariable 'CURSEFORGE_TOKEN'
         requires { slug = 'beyond-earth' }
         requires { slug = 'modernfix' }
     }
 
     github {
-        accessToken = providers.environmentVariable '$GITHUB_TOKEN'
+        accessToken = providers.environmentVariable 'GITHUB_TOKEN'
         repository = 'AnAwesomGuy/bosstools-performance'
         commitish = 'master'
         tagName = 'release/' + mod_version

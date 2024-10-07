@@ -9,30 +9,31 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
 // don't really know how to optimize this further, this stuff doesn't really make too much sense to me
+@SuppressWarnings("AddedMixinMembersNamePattern")
 @Mixin(value = OverlayEvents.class, remap = false)
 public abstract class OverlayEventsMixin {
     @Unique
     private static final ResourceLocation WARNING = new ResourceLocation("boss_tools", "textures/overlay/warning.png");
     @Unique
-    private static final ResourceLocation TIMER10 = new ResourceLocation("boss_tools", "textures/overlay/timer10.png");
+    private static final ResourceLocation TIMER10 = new ResourceLocation("boss_tools", "textures/timer/timer10.png");
     @Unique
-    private static final ResourceLocation TIMER9 = new ResourceLocation("boss_tools", "textures/overlay/timer9.png");
+    private static final ResourceLocation TIMER9 = new ResourceLocation("boss_tools", "textures/timer/timer9.png");
     @Unique
-    private static final ResourceLocation TIMER8 = new ResourceLocation("boss_tools", "textures/overlay/timer8.png");
+    private static final ResourceLocation TIMER8 = new ResourceLocation("boss_tools", "textures/timer/timer8.png");
     @Unique
-    private static final ResourceLocation TIMER7 = new ResourceLocation("boss_tools", "textures/overlay/timer7.png");
+    private static final ResourceLocation TIMER7 = new ResourceLocation("boss_tools", "textures/timer/timer7.png");
     @Unique
-    private static final ResourceLocation TIMER6 = new ResourceLocation("boss_tools", "textures/overlay/timer6.png");
+    private static final ResourceLocation TIMER6 = new ResourceLocation("boss_tools", "textures/timer/timer6.png");
     @Unique
-    private static final ResourceLocation TIMER5 = new ResourceLocation("boss_tools", "textures/overlay/timer5.png");
+    private static final ResourceLocation TIMER5 = new ResourceLocation("boss_tools", "textures/timer/timer5.png");
     @Unique
-    private static final ResourceLocation TIMER4 = new ResourceLocation("boss_tools", "textures/overlay/timer4.png");
+    private static final ResourceLocation TIMER4 = new ResourceLocation("boss_tools", "textures/timer/timer4.png");
     @Unique
-    private static final ResourceLocation TIMER3 = new ResourceLocation("boss_tools", "textures/overlay/timer3.png");
+    private static final ResourceLocation TIMER3 = new ResourceLocation("boss_tools", "textures/timer/timer3.png");
     @Unique
-    private static final ResourceLocation TIMER2 = new ResourceLocation("boss_tools", "textures/overlay/timer2.png");
+    private static final ResourceLocation TIMER2 = new ResourceLocation("boss_tools", "textures/timer/timer2.png");
     @Unique
-    private static final ResourceLocation TIMER1 = new ResourceLocation("boss_tools", "textures/overlay/timer1.png");
+    private static final ResourceLocation TIMER1 = new ResourceLocation("boss_tools", "textures/timer/timer1.png");
     @Unique
     private static final ResourceLocation OXYGEN_EMPTY = new ResourceLocation("boss_tools", "textures/overlay/oxygentankcheck_empty.png");
     @Unique

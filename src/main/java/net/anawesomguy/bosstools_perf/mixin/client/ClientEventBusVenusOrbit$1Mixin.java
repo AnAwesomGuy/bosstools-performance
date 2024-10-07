@@ -24,7 +24,6 @@ public abstract class ClientEventBusVenusOrbit$1Mixin extends DimensionRenderInf
         return BossToolsPerformanceConfig.VENUS_ORBIT_STAR_COUNT.get();
     }
 
-
     private ClientEventBusVenusOrbit$1Mixin() {
         //noinspection DataFlowIssue
         super(0F, false, null, false, false);
