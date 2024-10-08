@@ -177,6 +177,7 @@ publishMods {
     type = STABLE
 
     curseforge {
+        minecraftVersions.add minecraft_version
         projectId = '997755'
         accessToken = providers.environmentVariable 'CURSEFORGE_TOKEN'
         requires { slug = 'beyond-earth' }
